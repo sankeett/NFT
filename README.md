@@ -12,22 +12,31 @@ Degen Gaming Token is an ERC20 token smart contract designed for the Degen Gamin
 - Checking Token Balance: Players can check their token balance at any time using the `balanceOf` function.
 - Burning Tokens: Anyone who owns tokens can burn them if they are no longer needed.
 
-## Deployment
+- The MyToken contract is an ERC20 token contract that extends the ERC20 contract from the OpenZeppelin library. It includes additional functionality for minting and burning tokens, as well as a custom redeem function and a showStore function. Here is an overview of the contract's functionality:
 
-The contract can be deployed on the Avalanche network using tools such as Remix, Truffle, or Hardhat. When deploying the contract, make sure to set the following parameters:
+Contract Details
+Name: MyToken
+Symbol: DRT
+Constructor
+The constructor initializes the contract and sets the contract owner as the deployer of the contract.
 
-- `name`: The name of the token (e.g., "Degen Gaming Token").
-- `symbol`: The symbol or ticker of the token (e.g., "DGT").
-- `decimals`: The number of decimals for token divisibility (e.g., 18).
-- `initialSupply`: The initial supply of tokens to be created.
+Modifiers
+onlyOwner
+This modifier restricts certain functions to be called only by the contract owner. It checks whether the caller is the contract owner and reverts the transaction if not.
 
-## Getting Started
+Functions
+mint
+The mint function allows the contract owner to create and distribute new tokens. It takes two parameters: to (the address to which the tokens will be minted) and amount (the number of tokens to mint). Only the contract owner can call this function.
 
-To interact with the Degen Gaming Token contract, you can use an Ethereum-compatible wallet or write custom scripts. Below are a few examples of how to interact with the contract using the `web3.js` library in JavaScript:
+burn
+The burn function allows any token holder to burn a specific amount of their own tokens. It takes the amount of tokens to be burned as a parameter.
 
-1. Get the token balance of an address:
+transfer
+The transfer function overrides the transfer function from the ERC20 contract. It allows token holders to transfer tokens to other addresses. It checks if the sender has sufficient balance before executing the transfer.
 
-   ```javascript
-   const contract = new web3.eth.Contract(contractABI, contractAddress);
-   const balance = await contract.methods.balanceOf(address).call();
-   console.log(`Token balance of ${address}: ${balance}`);
+redeem
+The redeem function is an external function that can be called by anyone. It takes an item parameter that represents the item to be redeemed. Depending on the value of item, a specific amount is determined. If the amount is greater than 0, the function burns that amount of tokens from the sender's balance.
+
+showStore
+The showStore function is an external pure function that returns a string representing the available items in the store. The returned string lists three items with their corresponding redemption amounts.
+
